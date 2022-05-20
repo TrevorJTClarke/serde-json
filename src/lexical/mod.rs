@@ -17,15 +17,15 @@ mod bignum;
 mod cached;
 mod cached_float80;
 mod digit;
-mod errors;
+// mod errors;
 pub(crate) mod exponent;
-pub(crate) mod float;
+// pub(crate) mod float;
 mod large_powers;
 pub(crate) mod math;
 pub(crate) mod num;
-pub(crate) mod parse;
+// pub(crate) mod parse;
 pub(crate) mod rounding;
-mod shift;
+// mod shift;
 mod small_powers;
 
 #[cfg(limb_width_32)]
@@ -35,4 +35,4 @@ mod large_powers32;
 mod large_powers64;
 
 // API
-pub use self::parse::{parse_concise_float, parse_truncated_float};
+// pub use self::parse::{parse_concise_float, parse_truncated_float};

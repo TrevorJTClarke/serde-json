@@ -2,44 +2,44 @@
 
 //! Cached powers trait for extended-precision floats.
 
-use super::cached_float80;
-use super::float::ExtendedFloat;
+// use super::cached_float80;
+// use super::float::ExtendedFloat;
 
 // POWERS
 
-/// Precalculated powers that uses two-separate arrays for memory-efficiency.
-#[doc(hidden)]
-pub(crate) struct ExtendedFloatArray {
-    // Pre-calculated mantissa for the powers.
-    pub mant: &'static [u64],
-    // Pre-calculated binary exponents for the powers.
-    pub exp: &'static [i32],
-}
+// /// Precalculated powers that uses two-separate arrays for memory-efficiency.
+// #[doc(hidden)]
+// pub(crate) struct ExtendedFloatArray {
+//     // Pre-calculated mantissa for the powers.
+//     pub mant: &'static [u64],
+//     // Pre-calculated binary exponents for the powers.
+//     pub exp: &'static [i32],
+// }
 
-/// Allow indexing of values without bounds checking
-impl ExtendedFloatArray {
-    #[inline]
-    pub fn get_extended_float(&self, index: usize) -> ExtendedFloat {
-        let mant = self.mant[index];
-        let exp = self.exp[index];
-        ExtendedFloat { mant, exp }
-    }
+// /// Allow indexing of values without bounds checking
+// impl ExtendedFloatArray {
+//     #[inline]
+//     pub fn get_extended_float(&self, index: usize) -> ExtendedFloat {
+//         let mant = self.mant[index];
+//         let exp = self.exp[index];
+//         ExtendedFloat { mant, exp }
+//     }
 
-    #[inline]
-    pub fn len(&self) -> usize {
-        self.mant.len()
-    }
-}
+//     #[inline]
+//     pub fn len(&self) -> usize {
+//         self.mant.len()
+//     }
+// }
 
 // MODERATE PATH POWERS
 
 /// Precalculated powers of base N for the moderate path.
 #[doc(hidden)]
 pub(crate) struct ModeratePathPowers {
-    // Pre-calculated small powers.
-    pub small: ExtendedFloatArray,
-    // Pre-calculated large powers.
-    pub large: ExtendedFloatArray,
+    // // Pre-calculated small powers.
+    // pub small: ExtendedFloatArray,
+    // // Pre-calculated large powers.
+    // pub large: ExtendedFloatArray,
     /// Pre-calculated small powers as 64-bit integers
     pub small_int: &'static [u64],
     // Step between large powers and number of small powers.
@@ -50,15 +50,15 @@ pub(crate) struct ModeratePathPowers {
 
 /// Allow indexing of values without bounds checking
 impl ModeratePathPowers {
-    #[inline]
-    pub fn get_small(&self, index: usize) -> ExtendedFloat {
-        self.small.get_extended_float(index)
-    }
+    // #[inline]
+    // pub fn get_small(&self, index: usize) -> ExtendedFloat {
+    //     self.small.get_extended_float(index)
+    // }
 
-    #[inline]
-    pub fn get_large(&self, index: usize) -> ExtendedFloat {
-        self.large.get_extended_float(index)
-    }
+    // #[inline]
+    // pub fn get_large(&self, index: usize) -> ExtendedFloat {
+    //     self.large.get_extended_float(index)
+    // }
 
     #[inline]
     pub fn get_small_int(&self, index: usize) -> u64 {
@@ -74,9 +74,9 @@ pub(crate) trait ModeratePathCache {
     fn get_powers() -> &'static ModeratePathPowers;
 }
 
-impl ModeratePathCache for ExtendedFloat {
-    #[inline]
-    fn get_powers() -> &'static ModeratePathPowers {
-        cached_float80::get_powers()
-    }
-}
+// impl ModeratePathCache for ExtendedFloat {
+//     #[inline]
+//     fn get_powers() -> &'static ModeratePathPowers {
+//         cached_float80::get_powers()
+//     }
+// }

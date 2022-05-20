@@ -4,49 +4,49 @@
 
 use core::ops;
 
-/// Precalculated values of radix**i for i in range [0, arr.len()-1].
-/// Each value can be **exactly** represented as that type.
-const F32_POW10: [f32; 11] = [
-    1.0,
-    10.0,
-    100.0,
-    1000.0,
-    10000.0,
-    100000.0,
-    1000000.0,
-    10000000.0,
-    100000000.0,
-    1000000000.0,
-    10000000000.0,
-];
+// /// Precalculated values of radix**i for i in range [0, arr.len()-1].
+// /// Each value can be **exactly** represented as that type.
+// const F32_POW10: [f32; 11] = [
+//     1.0,
+//     10.0,
+//     100.0,
+//     1000.0,
+//     10000.0,
+//     100000.0,
+//     1000000.0,
+//     10000000.0,
+//     100000000.0,
+//     1000000000.0,
+//     10000000000.0,
+// ];
 
-/// Precalculated values of radix**i for i in range [0, arr.len()-1].
-/// Each value can be **exactly** represented as that type.
-const F64_POW10: [f64; 23] = [
-    1.0,
-    10.0,
-    100.0,
-    1000.0,
-    10000.0,
-    100000.0,
-    1000000.0,
-    10000000.0,
-    100000000.0,
-    1000000000.0,
-    10000000000.0,
-    100000000000.0,
-    1000000000000.0,
-    10000000000000.0,
-    100000000000000.0,
-    1000000000000000.0,
-    10000000000000000.0,
-    100000000000000000.0,
-    1000000000000000000.0,
-    10000000000000000000.0,
-    100000000000000000000.0,
-    1000000000000000000000.0,
-    10000000000000000000000.0,
-];
+// /// Precalculated values of radix**i for i in range [0, arr.len()-1].
+// /// Each value can be **exactly** represented as that type.
+// const F64_POW10: [f64; 23] = [
+//     1.0,
+//     10.0,
+//     100.0,
+//     1000.0,
+//     10000.0,
+//     100000.0,
+//     1000000.0,
+//     10000000.0,
+//     100000000.0,
+//     1000000000.0,
+//     10000000000.0,
+//     100000000000.0,
+//     1000000000000.0,
+//     10000000000000.0,
+//     100000000000000.0,
+//     1000000000000000.0,
+//     10000000000000000.0,
+//     100000000000000000.0,
+//     1000000000000000000.0,
+//     10000000000000000000.0,
+//     100000000000000000000.0,
+//     1000000000000000000000.0,
+//     10000000000000000000000.0,
+// ];
 
 /// Type that can be converted to primitive with `as`.
 pub trait AsPrimitive: Sized + Copy + PartialOrd {
@@ -54,8 +54,8 @@ pub trait AsPrimitive: Sized + Copy + PartialOrd {
     fn as_u64(self) -> u64;
     fn as_u128(self) -> u128;
     fn as_usize(self) -> usize;
-    fn as_f32(self) -> f32;
-    fn as_f64(self) -> f64;
+    // fn as_f32(self) -> f32;
+    // fn as_f64(self) -> f64;
 }
 
 macro_rules! as_primitive_impl {
@@ -82,21 +82,22 @@ macro_rules! as_primitive_impl {
                     self as usize
                 }
 
-                #[inline]
-                fn as_f32(self) -> f32 {
-                    self as f32
-                }
+                // #[inline]
+                // fn as_f32(self) -> f32 {
+                //     self as f32
+                // }
 
-                #[inline]
-                fn as_f64(self) -> f64 {
-                    self as f64
-                }
+                // #[inline]
+                // fn as_f64(self) -> f64 {
+                //     self as f64
+                // }
             }
         )*
     };
 }
 
-as_primitive_impl! { u32 u64 u128 usize f32 f64 }
+// as_primitive_impl! { u32 u64 u128 usize f32 f64 }
+as_primitive_impl! { u32 u64 u128 usize }
 
 /// An interface for casting between machine scalars.
 pub trait AsCast: AsPrimitive {
@@ -120,8 +121,8 @@ as_cast_impl!(u32, as_u32);
 as_cast_impl!(u64, as_u64);
 as_cast_impl!(u128, as_u128);
 as_cast_impl!(usize, as_usize);
-as_cast_impl!(f32, as_f32);
-as_cast_impl!(f64, as_f64);
+// as_cast_impl!(f32, as_f32);
+// as_cast_impl!(f64, as_f64);
 
 /// Numerical type trait.
 pub trait Number: AsCast + ops::Add<Output = Self> {}
@@ -134,7 +135,8 @@ macro_rules! number_impl {
     };
 }
 
-number_impl! { u32 u64 u128 usize f32 f64 }
+// number_impl! { u32 u64 u128 usize f32 f64 }
+number_impl! { u32 u64 u128 usize }
 
 /// Defines a trait that supports integral operations.
 pub trait Integer: Number + ops::BitAnd<Output = Self> + ops::Shr<i32, Output = Self> {
@@ -311,130 +313,130 @@ pub trait Float: Number {
     }
 }
 
-impl Float for f32 {
-    type Unsigned = u32;
+// impl Float for f32 {
+//     type Unsigned = u32;
 
-    const ZERO: f32 = 0.0;
-    const MAX_DIGITS: usize = 114;
-    const SIGN_MASK: u32 = 0x80000000;
-    const EXPONENT_MASK: u32 = 0x7F800000;
-    const HIDDEN_BIT_MASK: u32 = 0x00800000;
-    const MANTISSA_MASK: u32 = 0x007FFFFF;
-    const INFINITY_BITS: u32 = 0x7F800000;
-    const NEGATIVE_INFINITY_BITS: u32 = Self::INFINITY_BITS | Self::SIGN_MASK;
-    const MANTISSA_SIZE: i32 = 23;
-    const EXPONENT_BIAS: i32 = 127 + Self::MANTISSA_SIZE;
-    const DENORMAL_EXPONENT: i32 = 1 - Self::EXPONENT_BIAS;
-    const MAX_EXPONENT: i32 = 0xFF - Self::EXPONENT_BIAS;
-    const DEFAULT_SHIFT: i32 = u64::FULL - f32::MANTISSA_SIZE - 1;
-    const CARRY_MASK: u64 = 0x1000000;
+//     const ZERO: f32 = 0.0;
+//     const MAX_DIGITS: usize = 114;
+//     const SIGN_MASK: u32 = 0x80000000;
+//     const EXPONENT_MASK: u32 = 0x7F800000;
+//     const HIDDEN_BIT_MASK: u32 = 0x00800000;
+//     const MANTISSA_MASK: u32 = 0x007FFFFF;
+//     const INFINITY_BITS: u32 = 0x7F800000;
+//     const NEGATIVE_INFINITY_BITS: u32 = Self::INFINITY_BITS | Self::SIGN_MASK;
+//     const MANTISSA_SIZE: i32 = 23;
+//     const EXPONENT_BIAS: i32 = 127 + Self::MANTISSA_SIZE;
+//     const DENORMAL_EXPONENT: i32 = 1 - Self::EXPONENT_BIAS;
+//     const MAX_EXPONENT: i32 = 0xFF - Self::EXPONENT_BIAS;
+//     const DEFAULT_SHIFT: i32 = u64::FULL - f32::MANTISSA_SIZE - 1;
+//     const CARRY_MASK: u64 = 0x1000000;
 
-    #[inline]
-    fn exponent_limit() -> (i32, i32) {
-        (-10, 10)
-    }
+//     #[inline]
+//     fn exponent_limit() -> (i32, i32) {
+//         (-10, 10)
+//     }
 
-    #[inline]
-    fn mantissa_limit() -> i32 {
-        7
-    }
+//     #[inline]
+//     fn mantissa_limit() -> i32 {
+//         7
+//     }
 
-    #[inline]
-    fn pow10(self, n: i32) -> f32 {
-        // Check the exponent is within bounds in debug builds.
-        debug_assert!({
-            let (min, max) = Self::exponent_limit();
-            n >= min && n <= max
-        });
+//     #[inline]
+//     fn pow10(self, n: i32) -> f32 {
+//         // Check the exponent is within bounds in debug builds.
+//         debug_assert!({
+//             let (min, max) = Self::exponent_limit();
+//             n >= min && n <= max
+//         });
 
-        if n > 0 {
-            self * F32_POW10[n as usize]
-        } else {
-            self / F32_POW10[-n as usize]
-        }
-    }
+//         if n > 0 {
+//             self * F32_POW10[n as usize]
+//         } else {
+//             self / F32_POW10[-n as usize]
+//         }
+//     }
 
-    #[inline]
-    fn from_bits(u: u32) -> f32 {
-        f32::from_bits(u)
-    }
+//     #[inline]
+//     fn from_bits(u: u32) -> f32 {
+//         f32::from_bits(u)
+//     }
 
-    #[inline]
-    fn to_bits(self) -> u32 {
-        f32::to_bits(self)
-    }
+//     #[inline]
+//     fn to_bits(self) -> u32 {
+//         f32::to_bits(self)
+//     }
 
-    #[inline]
-    fn is_sign_positive(self) -> bool {
-        f32::is_sign_positive(self)
-    }
+//     #[inline]
+//     fn is_sign_positive(self) -> bool {
+//         f32::is_sign_positive(self)
+//     }
 
-    #[inline]
-    fn is_sign_negative(self) -> bool {
-        f32::is_sign_negative(self)
-    }
-}
+//     #[inline]
+//     fn is_sign_negative(self) -> bool {
+//         f32::is_sign_negative(self)
+//     }
+// }
 
-impl Float for f64 {
-    type Unsigned = u64;
+// impl Float for f64 {
+//     type Unsigned = u64;
 
-    const ZERO: f64 = 0.0;
-    const MAX_DIGITS: usize = 769;
-    const SIGN_MASK: u64 = 0x8000000000000000;
-    const EXPONENT_MASK: u64 = 0x7FF0000000000000;
-    const HIDDEN_BIT_MASK: u64 = 0x0010000000000000;
-    const MANTISSA_MASK: u64 = 0x000FFFFFFFFFFFFF;
-    const INFINITY_BITS: u64 = 0x7FF0000000000000;
-    const NEGATIVE_INFINITY_BITS: u64 = Self::INFINITY_BITS | Self::SIGN_MASK;
-    const MANTISSA_SIZE: i32 = 52;
-    const EXPONENT_BIAS: i32 = 1023 + Self::MANTISSA_SIZE;
-    const DENORMAL_EXPONENT: i32 = 1 - Self::EXPONENT_BIAS;
-    const MAX_EXPONENT: i32 = 0x7FF - Self::EXPONENT_BIAS;
-    const DEFAULT_SHIFT: i32 = u64::FULL - f64::MANTISSA_SIZE - 1;
-    const CARRY_MASK: u64 = 0x20000000000000;
+//     const ZERO: f64 = 0.0;
+//     const MAX_DIGITS: usize = 769;
+//     const SIGN_MASK: u64 = 0x8000000000000000;
+//     const EXPONENT_MASK: u64 = 0x7FF0000000000000;
+//     const HIDDEN_BIT_MASK: u64 = 0x0010000000000000;
+//     const MANTISSA_MASK: u64 = 0x000FFFFFFFFFFFFF;
+//     const INFINITY_BITS: u64 = 0x7FF0000000000000;
+//     const NEGATIVE_INFINITY_BITS: u64 = Self::INFINITY_BITS | Self::SIGN_MASK;
+//     const MANTISSA_SIZE: i32 = 52;
+//     const EXPONENT_BIAS: i32 = 1023 + Self::MANTISSA_SIZE;
+//     const DENORMAL_EXPONENT: i32 = 1 - Self::EXPONENT_BIAS;
+//     const MAX_EXPONENT: i32 = 0x7FF - Self::EXPONENT_BIAS;
+//     const DEFAULT_SHIFT: i32 = u64::FULL - f64::MANTISSA_SIZE - 1;
+//     const CARRY_MASK: u64 = 0x20000000000000;
 
-    #[inline]
-    fn exponent_limit() -> (i32, i32) {
-        (-22, 22)
-    }
+//     #[inline]
+//     fn exponent_limit() -> (i32, i32) {
+//         (-22, 22)
+//     }
 
-    #[inline]
-    fn mantissa_limit() -> i32 {
-        15
-    }
+//     #[inline]
+//     fn mantissa_limit() -> i32 {
+//         15
+//     }
 
-    #[inline]
-    fn pow10(self, n: i32) -> f64 {
-        // Check the exponent is within bounds in debug builds.
-        debug_assert!({
-            let (min, max) = Self::exponent_limit();
-            n >= min && n <= max
-        });
+//     #[inline]
+//     fn pow10(self, n: i32) -> f64 {
+//         // Check the exponent is within bounds in debug builds.
+//         debug_assert!({
+//             let (min, max) = Self::exponent_limit();
+//             n >= min && n <= max
+//         });
 
-        if n > 0 {
-            self * F64_POW10[n as usize]
-        } else {
-            self / F64_POW10[-n as usize]
-        }
-    }
+//         if n > 0 {
+//             self * F64_POW10[n as usize]
+//         } else {
+//             self / F64_POW10[-n as usize]
+//         }
+//     }
 
-    #[inline]
-    fn from_bits(u: u64) -> f64 {
-        f64::from_bits(u)
-    }
+//     #[inline]
+//     fn from_bits(u: u64) -> f64 {
+//         f64::from_bits(u)
+//     }
 
-    #[inline]
-    fn to_bits(self) -> u64 {
-        f64::to_bits(self)
-    }
+//     #[inline]
+//     fn to_bits(self) -> u64 {
+//         f64::to_bits(self)
+//     }
 
-    #[inline]
-    fn is_sign_positive(self) -> bool {
-        f64::is_sign_positive(self)
-    }
+//     #[inline]
+//     fn is_sign_positive(self) -> bool {
+//         f64::is_sign_positive(self)
+//     }
 
-    #[inline]
-    fn is_sign_negative(self) -> bool {
-        f64::is_sign_negative(self)
-    }
-}
+//     #[inline]
+//     fn is_sign_negative(self) -> bool {
+//         f64::is_sign_negative(self)
+//     }
+// }
