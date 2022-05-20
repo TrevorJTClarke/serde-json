@@ -1,6 +1,6 @@
 use crate::error::{Error, ErrorCode, Result};
 use crate::map::Map;
-use crate::number::Number;
+// use crate::number::Number;
 use crate::value::{to_value, Value};
 use alloc::borrow::ToOwned;
 use alloc::string::{String, ToString};
@@ -130,13 +130,15 @@ impl serde::Serializer for Serializer {
     }
 
     #[inline]
-    fn serialize_f32(self, value: f32) -> Result<Value> {
-        self.serialize_f64(value as f64)
+    fn serialize_f32(self, _value: f32) -> Result<Value> {
+        // self.serialize_f64(value as f64)
+        unreachable!()
     }
 
     #[inline]
-    fn serialize_f64(self, value: f64) -> Result<Value> {
-        Ok(Number::from_f64(value).map_or(Value::Null, Value::Number))
+    fn serialize_f64(self, _value: f64) -> Result<Value> {
+        // Ok(Number::from_f64(value).map_or(Value::Null, Value::Number))
+        unreachable!()
     }
 
     #[inline]

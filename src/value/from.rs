@@ -33,37 +33,37 @@ serde_if_integer128! {
     }
 }
 
-impl From<f32> for Value {
-    /// Convert 32-bit floating point number to `Value`
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use serde_json::Value;
-    ///
-    /// let f: f32 = 13.37;
-    /// let x: Value = f.into();
-    /// ```
-    fn from(f: f32) -> Self {
-        From::from(f as f64)
-    }
-}
+// impl From<f32> for Value {
+//     /// Convert 32-bit floating point number to `Value`
+//     ///
+//     /// # Examples
+//     ///
+//     /// ```
+//     /// use serde_json::Value;
+//     ///
+//     /// let f: f32 = 13.37;
+//     /// let x: Value = f.into();
+//     /// ```
+//     fn from(f: f32) -> Self {
+//         From::from(f as f64)
+//     }
+// }
 
-impl From<f64> for Value {
-    /// Convert 64-bit floating point number to `Value`
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use serde_json::Value;
-    ///
-    /// let f: f64 = 13.37;
-    /// let x: Value = f.into();
-    /// ```
-    fn from(f: f64) -> Self {
-        Number::from_f64(f).map_or(Value::Null, Value::Number)
-    }
-}
+// impl From<f64> for Value {
+//     /// Convert 64-bit floating point number to `Value`
+//     ///
+//     /// # Examples
+//     ///
+//     /// ```
+//     /// use serde_json::Value;
+//     ///
+//     /// let f: f64 = 13.37;
+//     /// let x: Value = f.into();
+//     /// ```
+//     fn from(f: f64) -> Self {
+//         Number::from_f64(f).map_or(Value::Null, Value::Number)
+//     }
+// }
 
 impl From<bool> for Value {
     /// Convert boolean to `Value`
