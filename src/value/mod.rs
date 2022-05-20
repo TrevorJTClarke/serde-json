@@ -138,7 +138,7 @@ pub enum Value {
     /// #
     /// let v = json!(12.5);
     /// ```
-    Number(Number),
+    // Number(Number),
 
     /// Represents a JSON string.
     ///
@@ -179,7 +179,7 @@ impl Debug for Value {
         match *self {
             Value::Null => formatter.debug_tuple("Null").finish(),
             Value::Bool(v) => formatter.debug_tuple("Bool").field(&v).finish(),
-            Value::Number(ref v) => Debug::fmt(v, formatter),
+            // Value::Number(ref v) => Debug::fmt(v, formatter),
             Value::String(ref v) => formatter.debug_tuple("String").field(v).finish(),
             Value::Array(ref v) => {
                 formatter.write_str("Array(")?;
@@ -509,12 +509,12 @@ impl Value {
     /// // The string `"2"` is a string, not a number.
     /// assert!(!v["b"].is_number());
     /// ```
-    pub fn is_number(&self) -> bool {
-        match *self {
-            Value::Number(_) => true,
-            _ => false,
-        }
-    }
+    // pub fn is_number(&self) -> bool {
+    //     match *self {
+    //         Value::Number(_) => true,
+    //         _ => false,
+    //     }
+    // }
 
     /// Returns true if the `Value` is an integer between `i64::MIN` and
     /// `i64::MAX`.
@@ -536,12 +536,12 @@ impl Value {
     /// // Numbers with a decimal point are not considered integers.
     /// assert!(!v["c"].is_i64());
     /// ```
-    pub fn is_i64(&self) -> bool {
-        match *self {
-            Value::Number(ref n) => n.is_i64(),
-            _ => false,
-        }
-    }
+    // pub fn is_i64(&self) -> bool {
+    //     match *self {
+    //         Value::Number(ref n) => n.is_i64(),
+    //         _ => false,
+    //     }
+    // }
 
     /// Returns true if the `Value` is an integer between zero and `u64::MAX`.
     ///
@@ -561,12 +561,12 @@ impl Value {
     /// // Numbers with a decimal point are not considered integers.
     /// assert!(!v["c"].is_u64());
     /// ```
-    pub fn is_u64(&self) -> bool {
-        match *self {
-            Value::Number(ref n) => n.is_u64(),
-            _ => false,
-        }
-    }
+    // pub fn is_u64(&self) -> bool {
+    //     match *self {
+    //         Value::Number(ref n) => n.is_u64(),
+    //         _ => false,
+    //     }
+    // }
 
     /// Returns true if the `Value` is a number that can be represented by f64.
     ///
@@ -587,12 +587,12 @@ impl Value {
     /// assert!(!v["b"].is_f64());
     /// assert!(!v["c"].is_f64());
     /// ```
-    pub fn is_f64(&self) -> bool {
-        match *self {
-            Value::Number(ref n) => n.is_f64(),
-            _ => false,
-        }
-    }
+    // pub fn is_f64(&self) -> bool {
+    //     match *self {
+    //         Value::Number(ref n) => n.is_f64(),
+    //         _ => false,
+    //     }
+    // }
 
     /// If the `Value` is an integer, represent it as i64 if possible. Returns
     /// None otherwise.
@@ -607,12 +607,12 @@ impl Value {
     /// assert_eq!(v["b"].as_i64(), None);
     /// assert_eq!(v["c"].as_i64(), None);
     /// ```
-    pub fn as_i64(&self) -> Option<i64> {
-        match *self {
-            Value::Number(ref n) => n.as_i64(),
-            _ => None,
-        }
-    }
+    // pub fn as_i64(&self) -> Option<i64> {
+    //     match *self {
+    //         Value::Number(ref n) => n.as_i64(),
+    //         _ => None,
+    //     }
+    // }
 
     /// If the `Value` is an integer, represent it as u64 if possible. Returns
     /// None otherwise.
@@ -626,12 +626,12 @@ impl Value {
     /// assert_eq!(v["b"].as_u64(), None);
     /// assert_eq!(v["c"].as_u64(), None);
     /// ```
-    pub fn as_u64(&self) -> Option<u64> {
-        match *self {
-            Value::Number(ref n) => n.as_u64(),
-            _ => None,
-        }
-    }
+    // pub fn as_u64(&self) -> Option<u64> {
+    //     match *self {
+    //         Value::Number(ref n) => n.as_u64(),
+    //         _ => None,
+    //     }
+    // }
 
     /// If the `Value` is a number, represent it as f64 if possible. Returns
     /// None otherwise.
@@ -645,12 +645,12 @@ impl Value {
     /// assert_eq!(v["b"].as_f64(), Some(64.0));
     /// assert_eq!(v["c"].as_f64(), Some(-64.0));
     /// ```
-    pub fn as_f64(&self) -> Option<f64> {
-        match *self {
-            Value::Number(ref n) => n.as_f64(),
-            _ => None,
-        }
-    }
+    // pub fn as_f64(&self) -> Option<f64> {
+    //     match *self {
+    //         Value::Number(ref n) => n.as_f64(),
+    //         _ => None,
+    //     }
+    // }
 
     /// Returns true if the `Value` is a Boolean. Returns false otherwise.
     ///
