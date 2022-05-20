@@ -4,7 +4,7 @@
 
 // use super::bhcomp::*;
 // use super::cached::*;
-use super::errors::*;
+// use super::errors::*;
 // use super::float::ExtendedFloat;
 use super::num::*;
 use super::small_powers::*;
